@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DimeloGasp · Productor musical en Mar del Plata</title>
+<meta name="description" content="Gaspar Navarro (DimeloGasp), productor musical de Mar del Plata. Beats, mezcla, Auto-Tune en vivo y sonido técnico para shows de música urbana." />
+<meta name="theme-color" content="#0b0b0e" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="DimeloGasp · Productor musical" />
+<meta property="og:description" content="Beats, mezcla, Auto-Tune en vivo y sonido para shows. Mar del Plata, Argentina." />
+<meta property="og:image" content="assets/img/proyectos/vivo-01.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230b0b0e'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%233d6dff' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23f2f0ea'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" />
+<!--
+  Referente: portfolio de Dennis Snellenberg ("Copy Dennis", Awwwards), misma lógica que mi-web/design-demos/B-referente-snellenberg.html.
+  Se traslada: foto a sangre con el nombre gigante corriendo abajo, ficha de ubicación y rol a los costados,
+  listas por filas con preview flotante, botones redondos magnéticos, menú redondo fijo y cierre "Trabajemos juntos".
+  Cambia: todo en oscuro. El azul del hero sale del humo y las luces de la foto vivo-01 (#022767 / #0164dc muestreados).
+-->
+<style>
+:root{
+  --bg:#0b0b0e;--bg2:#131419;--ink:#f2f0ea;--mute:#8e8f98;--line:#26272e;
+  --accent:#335fe6;--deep:#022767;
+  --f:"Schibsted Grotesk",system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);--io:cubic-bezier(.76,0,.24,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none} img{display:block;max-width:100%} h1,h2,h3,p,figure{margin:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+::selection{background:var(--accent);color:#fff}
+.wrap{max-width:1360px;margin:0 auto;padding:0 6vw}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.label{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding-bottom:28px}
+.mute{color:var(--mute)}
+
+/* LOADER */
+.loader{position:fixed;inset:0;z-index:200;background:var(--bg2);display:grid;place-items:center;transition:transform 1s var(--io)}
+.loader p{display:flex;align-items:center;gap:16px;font-size:clamp(36px,5vw,64px);font-weight:500;letter-spacing:-.03em}
+.loader p i{width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.loader svg{position:absolute;left:0;top:100%;width:100%;height:14vh;fill:var(--bg2);transition:transform 1s var(--io);transform-origin:top}
+.loader.out{transform:translateY(-114vh)}
+.loader.out svg{transform:scaleY(.15)}
+
+/* CURSOR */
+.cur,.cur-dot,.trail{position:fixed;left:0;top:0;pointer-events:none;z-index:150;display:none}
+.has-cursor .cur,.has-cursor .cur-dot,.has-cursor .trail{display:block}
+.has-cursor,.has-cursor *{cursor:none!important}
+.trail{width:100vw;height:100vh;z-index:149}
+.cur-dot{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;mix-blend-mode:difference;transition:opacity .2s}
+.cur{width:44px;height:44px;margin:-22px 0 0 -22px}
+.cur-in{width:100%;height:100%;border-radius:50%;border:1px solid rgba(242,240,234,.55);display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;transition:transform .45s var(--ease),background .3s,border-color .3s}
+.cur-in span{opacity:0;transform:scale(.4);transition:opacity .25s,transform .35s var(--ease)}
+.cur.link .cur-in{transform:scale(1.7);background:rgba(61,109,255,.14);border-color:var(--accent)}
+.cur.view .cur-in{transform:scale(2.1);background:var(--accent);border-color:var(--accent)}
+.cur.view .cur-in span{opacity:1;transform:scale(.48)}
+.cur.view~.cur-dot,.cur.hide~.cur-dot{opacity:0}
+.cur.hide .cur-in{transform:scale(0)}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:680px;max-height:1050px;overflow:hidden;
+  background:radial-gradient(ellipse 50% 62% at 50% 46%,#0a3f9a 0%,var(--deep) 38%,#011132 72%,var(--bg) 100%)}
+.nav{position:absolute;inset:0 0 auto;display:flex;justify-content:space-between;align-items:center;padding:32px 6vw;z-index:5;font-weight:600}
+.nav ul{display:flex;gap:34px;list-style:none;margin:0;padding:0}
+.nav a{position:relative;display:inline-block}
+.nav ul a::after,.panel a::after{content:"";position:absolute;left:50%;bottom:-10px;width:5px;height:5px;border-radius:50%;background:currentColor;transform:translateX(-50%) scale(0);transition:transform .3s var(--ease)}
+.nav ul a:hover::after{transform:translateX(-50%) scale(1)}
+.logo b{display:inline-block;transition:transform .5s var(--ease)}
+.logo:hover b{transform:rotate(360deg)}
+.portrait{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:94%;aspect-ratio:9/16;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent),linear-gradient(180deg,transparent,#000 10%,#000 80%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent),linear-gradient(180deg,transparent,#000 10%,#000 80%,transparent);mask-composite:intersect}
+.portrait img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.8s var(--ease),opacity 1.2s;opacity:0}
+.ready .portrait img{transform:scale(1);opacity:1}
+.loc{position:absolute;left:0;top:44%;display:flex;align-items:center;gap:22px;background:var(--bg);padding:20px 22px 20px 6vw;border-radius:0 999px 999px 0;z-index:4;transform:translateX(-105%);transition:transform 1.2s var(--ease) .35s}
+.ready .loc{transform:none}
+.loc p{font-size:16px;line-height:1.3}
+.vinyl{width:56px;height:56px;border-radius:50%;background:repeating-radial-gradient(circle,#1d1e24 0 2px,#26272e 2px 4px);display:grid;place-items:center;animation:spin 3.2s linear infinite}
+.vinyl::after{content:"";width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,var(--bg) 0 2px,var(--accent) 3px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.role{position:absolute;right:6vw;top:42%;z-index:4;font-weight:500;font-size:clamp(22px,2.3vw,34px);line-height:1.2;opacity:0;transform:translateY(30px);transition:opacity 1s .5s,transform 1.2s var(--ease) .5s}
+.ready .role{opacity:1;transform:none}
+.role svg{width:22px;height:22px;margin-bottom:28px;display:block}
+.hero .marquee{position:absolute;left:0;right:0;bottom:3vh;z-index:3;pointer-events:none;opacity:0;transform:translateY(60px);transition:opacity 1s .2s,transform 1.4s var(--ease) .2s}
+.ready .hero .marquee{opacity:1;transform:none}
+.marquee{white-space:nowrap;overflow:hidden}
+.track{display:inline-flex;will-change:transform}
+.hero .track span{font-size:clamp(110px,15vw,240px);font-weight:500;letter-spacing:-.045em;line-height:1;padding-right:.25em}
+
+/* MENÚ FIJO */
+.menu-btn{position:fixed;top:24px;right:24px;z-index:120;width:76px;height:76px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;transform:scale(0);transition:transform .5s var(--ease),background .3s}
+.menu-btn.on,.menu-open .menu-btn{transform:scale(1)}
+.menu-btn:hover{background:var(--accent)}
+.menu-btn i{position:absolute;width:26px;height:1.5px;background:currentColor;transition:transform .4s var(--ease)}
+.menu-btn i:first-child{transform:translateY(-4px)} .menu-btn i:last-child{transform:translateY(4px)}
+.menu-open .menu-btn i:first-child{transform:rotate(45deg)} .menu-open .menu-btn i:last-child{transform:rotate(-45deg)}
+.shade{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .5s}
+.menu-open .shade{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:0;bottom:0;z-index:115;width:min(500px,100%);background:var(--bg2);padding:14vh 8vw 6vh 6vw;display:flex;flex-direction:column;justify-content:space-between;transform:translateX(105%);transition:transform .8s var(--io)}
+.menu-open .panel{transform:none}
+.panel small{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
+.panel ul{list-style:none;margin:0;padding:0}
+.panel li{overflow:hidden}
+.panel ul a{position:relative;display:inline-block;font-size:clamp(40px,5vw,58px);font-weight:500;letter-spacing:-.03em;line-height:1.25;transform:translateY(100%);transition:transform .8s var(--ease)}
+.panel ul a::after{left:-26px;top:50%;bottom:auto}
+.panel ul a:hover::after{transform:translate(-50%,-50%) scale(2)}
+.menu-open .panel ul a{transform:none}
+.menu-open .panel li:nth-child(2) a{transition-delay:.05s} .menu-open .panel li:nth-child(3) a{transition-delay:.1s}
+.menu-open .panel li:nth-child(4) a{transition-delay:.15s} .menu-open .panel li:nth-child(5) a{transition-delay:.2s}
+.panel nav{display:flex;gap:24px;font-size:15px}
+
+/* REVEALS */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.w>span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease);transition-delay:calc(var(--i)*28ms)}
+.in .w>span,.w.in>span{transform:none}
+[data-r]{opacity:0;transform:translateY(50px);transition:opacity 1s,transform 1.2s var(--ease)}
+[data-r].in{opacity:1;transform:none}
+
+/* INTRO */
+.intro{display:grid;grid-template-columns:2fr 1fr;gap:6vw;padding:18vh 6vw 12vh;align-items:start}
+.intro h2{font-size:clamp(26px,2.7vw,40px);line-height:1.3;font-weight:400}
+.intro p{color:var(--mute)}
+.round{position:relative;width:180px;height:180px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;text-align:center;font-weight:500;margin-top:36px;overflow:hidden;isolation:isolate;will-change:transform;transition:transform .6s var(--ease)}
+.round::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ink);transform:translateY(102%);transition:transform .55s var(--ease);z-index:-1}
+.round:hover::before{transform:none}
+.round:hover{color:var(--bg)}
+.round em{font-style:normal;display:block;font-size:13px;font-weight:400}
+
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-bottom:14vh}
+.facts div{padding:28px 20px 0 0}
+.facts b{display:block;font-size:clamp(44px,4.4vw,68px);font-weight:500;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.facts span{display:block;margin-top:10px;color:var(--mute);font-size:15px;max-width:22ch}
+
+/* BANDA DE FOTO */
+.band{position:relative;height:78vh;min-height:420px;overflow:hidden;clip-path:inset(12% 6vw);transition:clip-path 1.4s var(--ease)}
+.band.in{clip-path:inset(0)}
+.band img{position:absolute;left:0;top:-15%;width:100%;height:130%;object-fit:cover;object-position:50% 40%}
+.band figcaption{position:absolute;left:6vw;bottom:5vh;font-size:14px;color:rgba(255,255,255,.8)}
+
+/* MÚSICA */
+.music{display:grid;grid-template-columns:1fr 1.35fr;gap:6vw;padding:18vh 6vw 16vh;align-items:start}
+.music h2,.two h2,.gal-head h2{font-size:clamp(38px,4.4vw,68px);font-weight:500;letter-spacing:-.04em;line-height:1.02}
+.music .mute{margin:26px 0 34px;max-width:40ch}
+.eq{display:inline-flex;align-items:flex-end;gap:3px;height:14px}
+.eq i{width:3px;background:var(--accent);animation:eq 1s ease-in-out infinite alternate}
+.eq i:nth-child(2){animation-delay:-.4s} .eq i:nth-child(3){animation-delay:-.7s} .eq i:nth-child(4){animation-delay:-.2s}
+@keyframes eq{from{height:3px}to{height:14px}}
+.player{border-radius:16px;overflow:hidden;background:var(--bg2);border:1px solid var(--line)}
+.player iframe{display:block;width:100%;height:560px;border:0}
+
+.pill{position:relative;display:inline-flex;align-items:center;gap:12px;padding:20px 38px;border:1px solid #3a3b42;border-radius:999px;font-weight:500;overflow:hidden;isolation:isolate;transition:color .4s,border-color .4s}
+.pill::before{content:"";position:absolute;left:-5%;width:110%;top:0;aspect-ratio:1;border-radius:50%;background:var(--accent);transform:translateY(-102%);transition:transform .55s var(--ease);z-index:-1}
+.pill:hover{border-color:var(--accent);color:#fff}
+.pill:hover::before{transform:translateY(-35%)}
+
+/* SERVICIOS */
+.list{border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:70px 1fr auto;gap:24px;align-items:baseline;padding:5vh 3vw;border-bottom:1px solid var(--line);transition:padding .5s var(--ease),opacity .35s}
+.list:hover .item{opacity:.35} .list .item:hover{opacity:1;padding-left:4.5vw;padding-right:1.5vw}
+.item .n{font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums}
+.item h3{font-size:clamp(30px,4.2vw,64px);font-weight:500;letter-spacing:-.035em;line-height:1.05}
+.item p{color:var(--mute);max-width:56ch;margin-top:14px;font-size:16px}
+.item .tag{font-size:15px;color:var(--mute);text-align:right}
+.more{display:flex;justify-content:center;margin:7vh 0 0}
+.float{position:fixed;left:0;top:0;width:340px;height:420px;pointer-events:none;z-index:20;border-radius:8px;overflow:hidden;transform:translate(-50%,-50%) scale(0);transition:transform .5s var(--ease);box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.float.on{transform:translate(-50%,-50%) scale(1)}
+.float img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+.float img.on{opacity:1}
+
+/* ARTISTAS */
+.artists{padding:18vh 0 16vh}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:end;padding:0 0 9vh}
+.feat .tag{display:inline-block;font-size:13px;padding:7px 14px;border-radius:999px;background:rgba(61,109,255,.16);color:#9fb6ff;margin-bottom:22px}
+.feat h3{font-size:clamp(54px,8vw,128px);font-weight:500;letter-spacing:-.045em;line-height:.95}
+.feat p{color:var(--mute);font-size:19px;max-width:44ch}
+.feat p b{color:var(--ink);font-weight:600}
+.names{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:3vh 0}
+.names .track>*{font-size:clamp(52px,7.5vw,118px);font-weight:500;letter-spacing:-.04em;line-height:1.15;padding-right:.45em;transition:color .3s}
+.names .track i{font-style:normal;color:var(--accent);font-size:.4em;align-self:center}
+.names .ghost .track span{color:transparent;-webkit-text-stroke:1px #4a4b55}
+
+/* EN VIVO / HERRAMIENTAS */
+.two{display:grid;grid-template-columns:1fr 1.6fr;gap:6vw;padding-bottom:16vh}
+.two .mute{margin-top:22px;max-width:36ch}
+.rows .r{display:grid;grid-template-columns:50px 1fr auto;gap:20px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:padding .45s var(--ease),color .3s}
+.rows .r:first-child{border-top:1px solid var(--line)}
+.rows .r:hover{padding-left:16px;color:#fff}
+.rows .r span{color:var(--mute);font-size:14px;font-variant-numeric:tabular-nums}
+.rows h3{font-size:clamp(20px,1.8vw,26px);font-weight:500;letter-spacing:-.01em}
+.rows .r i{width:8px;height:8px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .35s var(--ease)}
+.rows .r:hover i{transform:scale(1)}
+.tools{display:flex;flex-wrap:wrap;gap:10px}
+.tools span{padding:11px 20px;border:1px solid #33343b;border-radius:999px;font-size:15px;transition:border-color .3s,background .3s}
+.tools span:hover{border-color:var(--accent);background:rgba(61,109,255,.12)}
+.tools em{font-style:normal;color:#9fb6ff;font-size:13px;margin-left:6px}
+
+/* GALERÍA */
+.gal-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:7vh}
+.gal-head .mute{max-width:32ch;text-align:right}
+.gallery{columns:3;column-gap:22px;padding-bottom:18vh}
+.gallery figure{break-inside:avoid;margin-bottom:22px}
+.ph{position:relative;overflow:hidden;border-radius:6px;background:var(--bg2);clip-path:inset(100% 0 0 0);transition:clip-path 1.3s var(--io)}
+.in .ph,.ph.in{clip-path:inset(0)}
+.gallery img{width:100%;height:auto;transform:scale(1.15);transition:filter .5s;will-change:transform}
+.gallery figure:hover img{filter:brightness(1.12) saturate(1.1)}
+.gallery figcaption{font-size:14px;color:var(--mute);margin-top:10px}
+.lb{position:fixed;inset:0;z-index:130;background:rgba(5,5,7,.94);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .45s}
+.lb.on{opacity:1;pointer-events:auto}
+.lb img{max-width:86vw;max-height:82vh;border-radius:6px;transform:scale(.94);transition:transform .6s var(--ease),opacity .3s}
+.lb.on img{transform:none}
+.lb img.swap{opacity:0}
+.lb-bar{position:absolute;left:0;right:0;bottom:28px;display:flex;justify-content:center;align-items:center;gap:26px;font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums}
+.lb-bar button,.lb-x{width:56px;height:56px;border-radius:50%;border:1px solid #3a3b42;display:grid;place-items:center;font-size:20px;transition:background .3s,border-color .3s}
+.lb-bar button:hover,.lb-x:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.lb-x{position:absolute;top:24px;right:24px}
+
+/* CIERRE */
+.end{background:var(--bg2);padding:18vh 0 6vh;border-radius:48px 48px 0 0}
+.end-top{display:flex;align-items:center;gap:28px}
+.ava{width:110px;height:110px;border-radius:50%;flex:none;background:url(assets/img/proyectos/vivo-05.jpg) 95% 4%/250% auto}
+.end h2{font-size:clamp(52px,7.5vw,120px);font-weight:500;letter-spacing:-.045em;line-height:1}
+.end-line{position:relative;border-top:1px solid #34353c;margin:12vh 0 8vh}
+.end-line .round{position:absolute;right:8vw;top:-90px;margin:0}
+.pills{display:flex;gap:16px;flex-wrap:wrap}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-top:14vh;font-size:14px;color:#a2a3ab}
+.foot small{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8a8b94;margin-bottom:6px}
+.foot nav{display:flex;gap:26px} .foot nav a{color:var(--ink)}
+.foot nav a:hover{color:var(--accent)}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .menu-btn{transform:scale(1);width:62px;height:62px;top:18px;right:18px}
+  .hero{height:92vh;min-height:620px}
+  .portrait{height:84%}
+  .loc{top:auto;bottom:22vh;padding:14px 18px 14px 20px}
+  .vinyl{width:44px;height:44px}
+  .role{top:max(13vh,104px);right:auto;left:6vw;font-size:22px}
+  .role svg{margin-bottom:14px}
+  .intro,.two,.music,.feat{grid-template-columns:1fr;gap:28px}
+  .intro{padding:11vh 6vw 8vh}
+  .music{padding:12vh 6vw 10vh}
+  .player iframe{height:480px}
+  .round{width:140px;height:140px}
+  .facts{grid-template-columns:1fr 1fr;row-gap:28px;margin-bottom:10vh}
+  .band{height:52vh}
+  .item{grid-template-columns:1fr;gap:6px;padding:30px 0}
+  .item .tag{text-align:left}
+  .list:hover .item{opacity:1} .list .item:hover{padding-left:0;padding-right:0}
+  .artists{padding:12vh 0 10vh}
+  .gal-head{flex-direction:column;align-items:flex-start}
+  .gal-head .mute{text-align:left}
+  .gallery{columns:2;column-gap:12px}
+  .gallery figure{margin-bottom:12px}
+  .end{border-radius:28px 28px 0 0;padding-top:12vh}
+  .end-top{flex-direction:column;align-items:flex-start}
+  .end-line .round{right:0;top:-70px}
+  .float{display:none}
+}
+/* con "reducir movimiento" se mantienen los fundidos; se apagan parallax y aceleración por scroll (ver JS) */
+@media (prefers-reduced-motion:reduce){
+  .vinyl,.eq i{animation-duration:6s}
+}
+</style>
+</head>
+<body class="loading">
+
+<div class="loader" data-loader aria-hidden="true">
+  <p><i></i><span data-word>Hola</span></p>
+  <svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 0H100V0Q50 20 0 0Z"/></svg>
+</div>
+
+<button class="menu-btn" data-menu aria-label="Abrir menú" aria-expanded="false"><i></i><i></i></button>
+<div class="shade" data-close></div>
+<aside class="panel" aria-label="Menú">
+  <div>
+    <small>Navegación</small>
+    <ul>
+      <li><a href="#top" data-close>Inicio</a></li>
+      <li><a href="#musica" data-close>Música</a></li>
+      <li><a href="#servicios" data-close>Servicios</a></li>
+      <li><a href="#fotos" data-close>Fotos</a></li>
+      <li><a href="#contacto" data-close>Contacto</a></li>
+    </ul>
+  </div>
+  <div><small>Redes</small><nav><a href="https://www.instagram.com/dimelogasp_/" target="_blank" rel="noopener">Instagram</a><a href="https://open.spotify.com/playlist/1HtE5mrDMdr6NBlzEh76Ow" target="_blank" rel="noopener">Spotify</a><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a></nav></div>
+</aside>
+
+<header class="hero" id="top">
+  <nav class="nav">
+    <a class="logo" href="#top"><b>©</b> Prod. by Gasp</a>
+    <ul><li><a href="#musica">Música</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#fotos">Fotos</a></li><li><a href="#contacto">Contacto</a></li></ul>
+  </nav>
+  <div class="portrait"><img src="assets/img/proyectos/vivo-01.jpg" alt="DimeloGasp en el escenario, entre humo y luces azules" fetchpriority="high" /></div>
+  <div class="loc">
+    <p>Nacido y criado<br/>en Mar del Plata,<br/>Argentina</p>
+    <span class="vinyl" aria-hidden="true"></span>
+  </div>
+  <div class="role">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M7 7l10 10M17 8v9H8"/></svg>
+    Productor musical<br/>&amp; Auto-Tune en vivo
+  </div>
+  <h1 class="sr">DimeloGasp, Gaspar Navarro, productor musical</h1>
+  <div class="marquee" data-marquee="1.3" aria-hidden="true"><div class="track"><span>DimeloGasp —</span><span>DimeloGasp —</span></div></div>
+</header>
+
+<main>
+  <section class="intro" id="sobre">
+    <h2 data-split>Produzco beats, mezclo canciones y me encargo de que la voz suene afinada y presente en cada show. Más de seis años entre el estudio y el escenario de la música urbana.</h2>
+    <div data-r>
+      <p>Soy Gaspar Navarro, nacido y residente en Mar del Plata. Trabajo desde mi home studio en Ableton Live y FL Studio, toco en vivo y asisto en sonido en los escenarios de la ciudad. Urbano de base, pero me animo a todo.</p>
+      <a class="round magnet" data-wa href="#" target="_blank" rel="noopener"><span>Trabajemos<br/>juntos</span></a>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="facts">
+      <div data-r><b data-count="6" data-suffix="+">0</b><span>años produciendo, en estudio y en vivo</span></div>
+      <div data-r><b data-count="17">0</b><span>artistas con los que trabajé</span></div>
+      <div data-r><b data-count="9" data-suffix="+">0</b><span>escenarios de Mar del Plata</span></div>
+      <div data-r><b data-count="60" data-suffix="+">0</b><span>temas en los que produje o mezclé</span></div>
+    </div>
+  </div>
+
+  <figure class="band" data-band>
+    <img src="assets/img/perfil/perfil.jpg" alt="Gasp en la consola junto a un artista en pleno show" loading="lazy" data-parallax="0.12" />
+    <figcaption>En vivo · Mar del Plata</figcaption>
+  </figure>
+
+  <section class="music" id="musica">
+    <div>
+      <p class="label"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Música</p>
+      <h2 data-split>Temas en los que puse las manos</h2>
+      <p class="mute" data-r>Una playlist con las canciones que produje, mezclé o en las que participé. Dale play acá mismo, o abrila en Spotify para escucharla completa.</p>
+      <a class="pill magnet" data-r href="https://open.spotify.com/playlist/1HtE5mrDMdr6NBlzEh76Ow" target="_blank" rel="noopener">Abrir en Spotify ↗</a>
+    </div>
+    <div class="player" data-r>
+      <iframe title="Playlist de DimeloGasp en Spotify" src="https://open.spotify.com/embed/playlist/1HtE5mrDMdr6NBlzEh76Ow?utm_source=generator&amp;theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
+  </section>
+
+  <section class="wrap" id="servicios">
+    <p class="label">Servicios</p>
+    <div class="list" data-list>
+      <div class="item" data-img="assets/img/proyectos/vivo-05.jpg">
+        <span class="n">01</span>
+        <div><h3>Producción &amp; beats</h3><p>Creación de beats, composición de instrumentales y producción completa de canciones, desde la idea hasta el tema terminado.</p></div>
+        <span class="tag">Ableton Live · FL Studio</span>
+      </div>
+      <div class="item" data-img="assets/img/proyectos/vivo-04.jpg">
+        <span class="n">02</span>
+        <div><h3>Mezcla</h3><p>Mezcla completa de canciones del género urbano, trabajando el color y la dinámica de cada voz para que el tema suene a disco.</p></div>
+        <span class="tag">Home studio</span>
+      </div>
+      <div class="item" data-img="assets/img/proyectos/vivo-03.jpg">
+        <span class="n">03</span>
+        <div><h3>Auto-Tune en vivo</h3><p>Afinación y procesamiento vocal en tiempo real para shows: parches, buses y cadenas de efectos con la mínima latencia, pensados para P.A. y monitores.</p></div>
+        <span class="tag">Voces para escenario</span>
+      </div>
+      <div class="item" data-img="assets/img/proyectos/vivo-02.jpg">
+        <span class="n">04</span>
+        <div><h3>Sonido &amp; live rig</h3><p>Sistemas de reproducción, ruteo de señal, interfaces y automatizaciones MIDI. Esquemas técnicos, documentación y monitoreo en escenario.</p></div>
+        <span class="tag">Producción técnica</span>
+      </div>
+    </div>
+    <div class="more"><a class="pill magnet" data-wa href="#" target="_blank" rel="noopener">Consultá por WhatsApp</a></div>
+  </section>
+
+  <section class="artists" id="artistas">
+    <div class="wrap">
+      <p class="label">Artistas &amp; colaboraciones</p>
+      <div class="feat">
+        <div data-r><span class="tag">Colaboración destacada</span><h3>Omar Varela</h3></div>
+        <p data-r>Productor, DJ y fundador de <b>Mueva Records</b>, referente pionero del trap y la música urbana en Argentina y Latinoamérica.</p>
+      </div>
+    </div>
+    <ul class="sr"><li>MACO</li><li>Santi Spataro</li><li>Tobi Delezor</li><li>Coco Swing</li><li>Los Zara</li><li>Lowpress</li><li>Uzu</li><li>Tairy</li><li>Orce</li><li>Zaky</li><li>Tivi</li><li>Joa</li><li>Naos</li><li>Truer</li><li>Laurenn</li><li>CN</li></ul>
+    <div class="names" aria-hidden="true">
+      <div class="marquee" data-marquee="0.9"><div class="track"><span>MACO</span><i>✦</i><span>Santi Spataro</span><i>✦</i><span>Tobi Delezor</span><i>✦</i><span>Coco Swing</span><i>✦</i><span>Los Zara</span><i>✦</i><span>Lowpress</span><i>✦</i><span>Uzu</span><i>✦</i><span>Tairy</span><i>✦</i></div></div>
+      <div class="marquee ghost" data-marquee="0.9" data-reverse><div class="track"><span>Orce</span><i>✦</i><span>Zaky</span><i>✦</i><span>Tivi</span><i>✦</i><span>Joa</span><i>✦</i><span>Naos</span><i>✦</i><span>Truer</span><i>✦</i><span>Laurenn</span><i>✦</i><span>CN</span><i>✦</i></div></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="two">
+      <div><h2 data-split>En vivo</h2><p class="mute" data-r>Puesta en escena, soporte técnico y Auto-Tune en tiempo real en la mayoría de los escenarios de la ciudad.</p></div>
+      <div class="rows">
+        <div class="r" data-r><span>01</span><h3>Teatro Vorterix Mar del Plata</h3><i></i></div>
+        <div class="r" data-r><span>02</span><h3>Teatro Colón de Mar del Plata</h3><i></i></div>
+        <div class="r" data-r><span>03</span><h3>Plaza de la Música MDP</h3><i></i></div>
+        <div class="r" data-r><span>04</span><h3>Club TRI</h3><i></i></div>
+        <div class="r" data-r><span>05</span><h3>Mole Club</h3><i></i></div>
+        <div class="r" data-r><span>06</span><h3>Abbey Road</h3><i></i></div>
+        <div class="r" data-r><span>07</span><h3>CCAVE</h3><i></i></div>
+        <div class="r" data-r><span>08</span><h3>Brew House</h3><i></i></div>
+        <div class="r" data-r><span>09</span><h3>Sonora Park</h3><i></i></div>
+      </div>
+    </section>
+
+    <section class="two">
+      <h2 data-split>Herramientas</h2>
+      <div class="tools" data-r>
+        <span>Ableton Live<em>avanzado</em></span><span>FL Studio<em>avanzado</em></span><span>Auto-Tune en tiempo real</span><span>Cadenas vocales para shows</span><span>Controladores MIDI</span><span>Ruteo de señal</span><span>Interfaces de audio</span><span>Monitoreo en escenario</span><span>Esquemas y riders técnicos</span><span>Beatmaking</span><span>Mezcla</span>
+      </div>
+    </section>
+
+    <section id="fotos">
+      <div class="gal-head">
+        <div><p class="label">Fotos</p><h2 data-split>Detrás de la consola</h2></div>
+        <p class="mute" data-r>Shows, pruebas de sonido y noches en los escenarios de Mar del Plata. Tocá una foto para verla grande.</p>
+      </div>
+      <div class="gallery" data-gallery>
+        <figure data-r><div class="ph" data-cursor="Ver"><img src="assets/img/proyectos/vivo-01.jpg" alt="Gasp en el escenario entre humo y luces azules" loading="lazy" width="900" height="1600" data-parallax="0.06" /></div></figure>
+        <figure data-r><div class="ph" data-cursor="Ver"><img src="assets/img/proyectos/vivo-03.jpg" alt="Gasp de perfil operando la notebook en pleno show" loading="lazy" width="1548" height="1032" data-parallax="0.06" /></div></figure>
+        <figure data-r><div class="ph" data-cursor="Ver"><img src="assets/img/proyectos/vivo-05.jpg" alt="Gasp marcando el ritmo junto al controlador MIDI" loading="lazy" width="640" height="640" data-parallax="0.06" /></div></figure>
+        <figure data-r><div class="ph" data-cursor="Ver"><img src="assets/img/proyectos/vivo-02.jpg" alt="Gasp tocando en vivo con controlador y notebook" loading="lazy" width="1066" height="1600" data-parallax="0.06" /></div></figure>
+        <figure data-r><div class="ph" data-cursor="Ver"><img src="assets/img/proyectos/vivo-04.jpg" alt="Gasp en la consola frente a una pared de chapa con una guitarra colgada" loading="lazy" width="1100" height="1650" data-parallax="0.06" /></div></figure>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="end" id="contacto">
+  <div class="wrap">
+    <div class="end-top">
+      <div class="ava" role="img" aria-label="Gaspar Navarro"></div>
+      <h2 data-split>Trabajemos<br/>juntos</h2>
+    </div>
+    <div class="end-line"><a class="round magnet" data-wa href="#" target="_blank" rel="noopener"><span>Escribime<em>WhatsApp</em></span></a></div>
+    <div class="pills">
+      <a class="pill" data-wa href="#" target="_blank" rel="noopener">+54 9 223 550-3325</a>
+      <a class="pill" href="https://www.instagram.com/dimelogasp_/" target="_blank" rel="noopener">@dimelogasp_</a>
+    </div>
+    <div class="foot">
+      <div><small>Productor</small>© 2026 Gaspar Navarro</div>
+      <div><small>Hora local</small><span data-clock>—</span> · Mar del Plata</div>
+      <div><small>Redes</small><nav><a href="https://www.instagram.com/dimelogasp_/" target="_blank" rel="noopener">Instagram</a><a href="https://open.spotify.com/playlist/1HtE5mrDMdr6NBlzEh76Ow" target="_blank" rel="noopener">Spotify</a></nav></div>
+    </div>
+  </div>
+</footer>
+
+<div class="float" data-float aria-hidden="true"></div>
+
+<div class="lb" data-lb role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <img src="assets/img/proyectos/vivo-01.jpg" alt="" data-lb-img />
+  <button class="lb-x" data-lb-close aria-label="Cerrar">✕</button>
+  <div class="lb-bar"><button data-lb-prev aria-label="Foto anterior">←</button><span data-lb-count>01 / 05</span><button data-lb-next aria-label="Foto siguiente">→</button></div>
+</div>
+
+<canvas class="trail" data-trail aria-hidden="true"></canvas>
+<div class="cur" data-cur aria-hidden="true"><div class="cur-in"><span data-cur-label>Ver</span></div></div>
+<div class="cur-dot" data-dot aria-hidden="true"></div>
+
+<script>
+(function(){
+  var WA = "https://wa.me/5492235503325?text=" + encodeURIComponent("Hola Gaspar! Vi tu portfolio y quiero consultarte por un trabajo.");
+  var $ = function(s,c){return (c||document).querySelector(s);}, $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var body = document.body;
+
+  $$("[data-wa]").forEach(function(a){a.href = WA;});
+
+  // reloj local
+  var clock = $("[data-clock]");
+  function tick(){ try{ clock.textContent = new Intl.DateTimeFormat("es-AR",{hour:"2-digit",minute:"2-digit",timeZone:"America/Argentina/Buenos_Aires"}).format(new Date()) + " GMT-3"; }catch(e){} }
+  tick(); setInterval(tick, 30000);
+
+  // texto partido en palabras para el reveal
+  $$("[data-split]").forEach(function(el){
+    var i = 0, out = [];
+    el.childNodes.forEach(function(n){
+      if(n.nodeType === 3){
+        n.textContent.split(/(\s+)/).forEach(function(p){
+          if(!p) return;
+          if(/^\s+$/.test(p)){ out.push(document.createTextNode(" ")); return; }
+          var w = document.createElement("span"); w.className = "w";
+          var s = document.createElement("span"); s.textContent = p; s.style.setProperty("--i", i++);
+          w.appendChild(s); out.push(w);
+        });
+      } else out.push(n.cloneNode(true));
+    });
+    el.textContent = ""; out.forEach(function(n){el.appendChild(n);});
+  });
+
+  // reveal al entrar en pantalla
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); if(e.target.hasAttribute("data-count")) count(e.target); } });
+  },{rootMargin:"0px 0px -12% 0px"});
+  $$("[data-split],[data-r],[data-band],[data-count]").forEach(function(el){io.observe(el);});
+
+  function count(el){
+    var to = +el.getAttribute("data-count"), suf = el.getAttribute("data-suffix") || "", t0 = null;
+    (function step(t){ if(!t0) t0 = t; var k = Math.min((t - t0)/1400, 1); el.textContent = Math.round(to*(1-Math.pow(1-k,3))) + suf; if(k < 1) requestAnimationFrame(step); })(performance.now());
+  }
+
+  // loader con saludos
+  var loader = $("[data-loader]"), word = $("[data-word]");
+  var words = ["Hola","Dímelo","Hello","Olá","Ciao","Bonjour","Gasp"];
+  function start(){ body.classList.remove("loading"); body.classList.add("ready"); }
+  {
+    var wi = 0, wt = setInterval(function(){
+      wi++;
+      if(wi < words.length){ word.textContent = words[wi]; }
+      else { clearInterval(wt); loader.classList.add("out"); setTimeout(start, 250); setTimeout(function(){loader.remove();}, 1100); }
+    }, 170);
+  }
+
+  // menú redondo fijo
+  var btn = $("[data-menu]"), hero = $(".hero");
+  function menu(open){ body.classList.toggle("menu-open", open); btn.setAttribute("aria-expanded", open); btn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú"); }
+  btn.addEventListener("click", function(){ menu(!body.classList.contains("menu-open")); });
+  $$("[data-close]").forEach(function(el){ el.addEventListener("click", function(){ menu(false); }); });
+  addEventListener("keydown", function(e){ if(e.key === "Escape"){ menu(false); closeLb(); } });
+
+  // marquesinas: cambian de sentido con el scroll y aceleran con la velocidad
+  var mqs = $$("[data-marquee]").map(function(m){
+    var t = $(".track", m); t.innerHTML += t.innerHTML;
+    return {t:t, x:0, s:+m.getAttribute("data-marquee") || 1, rev:m.hasAttribute("data-reverse") ? -1 : 1};
+  });
+  var lastY = scrollY, dir = 1, vel = 0;
+
+  // parallax
+  var px = $$("[data-parallax]");
+
+  // galería + lightbox
+  var gimgs = $$("[data-gallery] img"), lb = $("[data-lb]"), lbImg = $("[data-lb-img]"), lbCount = $("[data-lb-count]"), cur = 0;
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function show(i){
+    cur = (i + gimgs.length) % gimgs.length;
+    lbImg.classList.add("swap");
+    setTimeout(function(){ lbImg.src = gimgs[cur].src; lbImg.alt = gimgs[cur].alt; lbImg.classList.remove("swap"); }, lb.classList.contains("on") ? 180 : 0);
+    lbCount.textContent = pad(cur+1) + " / " + pad(gimgs.length);
+  }
+  function closeLb(){ if(lb.classList.contains("on")){ lb.classList.remove("on"); body.style.overflow = ""; } }
+  gimgs.forEach(function(img,i){
+    var ph = img.parentNode; ph.tabIndex = 0; ph.setAttribute("role","button"); ph.setAttribute("aria-label","Ampliar: " + img.alt);
+    function open(){ show(i); lb.classList.add("on"); body.style.overflow = "hidden"; }
+    ph.addEventListener("click", open);
+    ph.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); open(); } });
+  });
+  $("[data-lb-prev]").addEventListener("click", function(){ show(cur-1); });
+  $("[data-lb-next]").addEventListener("click", function(){ show(cur+1); });
+  $("[data-lb-close]").addEventListener("click", closeLb);
+  lb.addEventListener("click", function(e){ if(e.target === lb) closeLb(); });
+  addEventListener("keydown", function(e){ if(!lb.classList.contains("on")) return; if(e.key === "ArrowLeft") show(cur-1); if(e.key === "ArrowRight") show(cur+1); });
+
+  // cursor, rastro y preview flotante (solo con mouse)
+  var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my, moved = false;
+  var c = $("[data-cur]"), dot = $("[data-dot]"), label = $("[data-cur-label]"), fl = $("[data-float]"), fx = mx, fy = my;
+  var cv = $("[data-trail]"), ctx = cv.getContext("2d"), pts = [], dpr = Math.min(devicePixelRatio || 1, 2);
+  function size(){ cv.width = innerWidth*dpr; cv.height = innerHeight*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  if(fine){
+    document.documentElement.classList.add("has-cursor");
+    size(); addEventListener("resize", size);
+    addEventListener("mousemove", function(e){ mx = e.clientX; my = e.clientY; moved = true; }, {passive:true});
+    document.addEventListener("mouseleave", function(){ c.classList.add("hide"); });
+    document.addEventListener("mouseenter", function(){ c.classList.remove("hide"); });
+    document.addEventListener("mouseover", function(e){
+      var v = e.target.closest("[data-cursor]"), l = e.target.closest("a,button,.item,.r,.tools span");
+      c.classList.toggle("view", !!v); c.classList.toggle("link", !v && !!l);
+      if(v) label.textContent = v.getAttribute("data-cursor");
+    });
+    // botones magnéticos
+    $$(".magnet").forEach(function(b){
+      b.addEventListener("mousemove", function(e){ var r = b.getBoundingClientRect(); b.style.transform = "translate(" + ((e.clientX-r.left-r.width/2)*.35) + "px," + ((e.clientY-r.top-r.height/2)*.35) + "px)"; });
+      b.addEventListener("mouseleave", function(){ b.style.transform = ""; });
+    });
+    // preview de fotos en la lista de servicios
+    var imgs = {};
+    $$("[data-list] .item").forEach(function(it){
+      var src = it.getAttribute("data-img"), im = document.createElement("img");
+      im.src = src; im.alt = ""; fl.appendChild(im); imgs[src] = im;
+      it.addEventListener("mouseenter", function(){ for(var k in imgs) imgs[k].classList.toggle("on", k === src); fl.classList.add("on"); c.classList.add("hide"); });
+      it.addEventListener("mouseleave", function(){ fl.classList.remove("on"); c.classList.remove("hide"); });
+    });
+  }
+
+  function frame(){
+    var vh = innerHeight;
+    // scroll: dirección y velocidad
+    var y = scrollY, d = y - lastY; lastY = y;
+    if(d > 0) dir = 1; else if(d < 0) dir = -1;
+    vel += (Math.min(Math.abs(d), 90) - vel) * .1;
+    btn.classList.toggle("on", y > hero.offsetHeight*.6);
+    mqs.forEach(function(m){
+      var w = m.t.scrollWidth/2; if(!w) return;
+      m.x -= (m.s + (reduce ? 0 : vel*.12)) * dir * m.rev * (reduce ? .3 : 1);
+      if(m.x <= -w) m.x += w; if(m.x > 0) m.x -= w;
+      m.t.style.transform = "translate3d(" + m.x + "px,0,0)";
+    });
+    if(!reduce) px.forEach(function(el){
+      var r = el.parentNode.getBoundingClientRect(); if(r.bottom < 0 || r.top > vh) return;
+      var o = (r.top + r.height/2 - vh/2) * -(+el.getAttribute("data-parallax"));
+      el.style.transform = "translate3d(0," + o + "px,0)" + (el.closest("[data-gallery]") ? " scale(1.15)" : "");
+    });
+    if(fine){
+      // anillo con retardo que se estira según la velocidad
+      var dx = mx - rx, dy = my - ry; rx += dx*.17; ry += dy*.17;
+      var sp = Math.min(Math.hypot(dx,dy)/120, .55), ang = Math.atan2(dy,dx)*180/Math.PI;
+      c.style.transform = "translate3d(" + rx + "px," + ry + "px,0) rotate(" + ang + "deg) scale(" + (1+sp) + "," + (1-sp*.6) + ")";
+      $(".cur-in", c).firstElementChild.style.rotate = (-ang) + "deg";
+      dot.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
+      fx += (mx - fx)*.12; fy += (my - fy)*.12; fl.style.left = fx + "px"; fl.style.top = fy + "px";
+      // rastro: estela azul que se apaga detrás del cursor
+      if(moved) pts.push({x:mx, y:my});
+      if(pts.length > 22 || (!moved && pts.length)) pts.shift();
+      moved = false;
+      ctx.clearRect(0,0,innerWidth,vh);
+      for(var i = 1; i < pts.length; i++){
+        var k = i/pts.length;
+        ctx.beginPath(); ctx.moveTo(pts[i-1].x, pts[i-1].y); ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.strokeStyle = "rgba(61,109,255," + (k*.75) + ")"; ctx.lineWidth = k*3.2; ctx.lineCap = "round"; ctx.stroke();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
